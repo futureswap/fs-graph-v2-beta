@@ -1,0 +1,35 @@
+specVersion: 0.0.1
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: Futureswap
+    network: kovan
+    source:
+      address: "0x2dee540685f4dcdcf2ea10b79071ce8bd2a290ff"
+      abi: Futureswap
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.2
+      language: wasm/assemblyscript
+      entities:
+        - AddCollateral
+        - IncentivesCallFailed
+        - TradeClose
+        - TradeLiquidate
+        - TradeOpen
+      abis:
+        - name: Futureswap
+          file: ./abis/Futureswap.json
+      eventHandlers:
+        - event: AddCollateral(indexed uint256,indexed address,uint256)
+          handler: handleAddCollateral
+        - event: IncentivesCallFailed(uint256)
+          handler: handleIncentivesCallFailed
+        - event: TradeClose(indexed uint256,indexed address,indexed address,uint256,uint256,bool,uint256,uint256,uint256,bool)
+          handler: handleTradeClose
+        - event: TradeLiquidate(indexed uint256,indexed address,indexed address,uint256,uint256)
+          handler: handleTradeLiquidate
+        - event: TradeOpen(indexed uint256,indexed address,uint256,uint256,uint256,uint256,bool,uint256)
+          handler: handleTradeOpen
+      file: ./src/mapping.ts

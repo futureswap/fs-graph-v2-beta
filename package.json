@@ -1,0 +1,16 @@
+{
+  "name": "fs-graph-v2-beta",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ futureswap/fs-graph-v2-beta",
+    "create-local": "graph create --node http://localhost:8020/ futureswap/fs-graph-v2-beta",
+    "remove-local": "graph remove --node http://localhost:8020/ futureswap/fs-graph-v2-beta",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 futureswap/fs-graph-v2-beta"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.19.0",
+    "@graphprotocol/graph-ts": "0.19.0"
+  }
+}
