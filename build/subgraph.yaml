@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: Futureswap
@@ -21,16 +21,18 @@ dataSources:
         - TradeOpen
       abis:
         - name: Futureswap
-          file: ./abis/Futureswap.json
+          file: Futureswap/abis/Futureswap.json
       eventHandlers:
         - event: AddCollateral(indexed uint256,indexed address,uint256)
           handler: handleAddCollateral
         - event: IncentivesCallFailed(uint256)
           handler: handleIncentivesCallFailed
-        - event: TradeClose(indexed uint256,indexed address,indexed address,uint256,uint256,bool,uint256,uint256,uint256,bool)
+        - event: TradeClose(indexed uint256,indexed address,indexed
+            address,uint256,uint256,bool,uint256,uint256,uint256,bool)
           handler: handleTradeClose
         - event: TradeLiquidate(indexed uint256,indexed address,indexed address,uint256,uint256)
           handler: handleTradeLiquidate
-        - event: TradeOpen(indexed uint256,indexed address,uint256,uint256,uint256,uint256,bool,uint256)
+        - event: TradeOpen(indexed uint256,indexed
+            address,uint256,uint256,uint256,uint256,bool,uint256)
           handler: handleTradeOpen
-      file: ./src/mapping.ts
+      file: Futureswap/Futureswap.wasm
