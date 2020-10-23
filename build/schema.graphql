@@ -2,23 +2,11 @@ type Trade @entity {
   id: ID!
   tradeId: BigInt!
   trader: Bytes
-  leverage: BigInt
-  collateral: BigInt
-  openFee: BigInt
-  assetMarketPrice: BigInt
-  isLong: Boolean
-  isLiquidated: Boolean
+  tradeValue: BigInt!
   isOpen: Boolean
-  stablePrice: BigInt
-  percentToClose: BigInt
-  assetOpenPrice: BigInt
-  assetRedemptionAmount: BigInt
-  lastUpdate: Int
-  openedAt: Int
-  referral: Bytes
+  isLong: Boolean
+  timestamp: Int
 }
-
-
 
 type OpenedTrade @entity {
   id: ID!
@@ -29,8 +17,8 @@ type OpenedTrade @entity {
   openFee: BigInt
   assetMarketPrice: BigInt
   isLong: Boolean
-  stablePrice: BigInt    
-  timestamp: Int 
+  stablePrice: BigInt
+  timestamp: Int
 }
 
 type ClosedTrade @entity {
@@ -45,25 +33,24 @@ type ClosedTrade @entity {
   assetOpenPrice: BigInt
   assetRedemptionAmount: BigInt
   assetMarketPrice: BigInt
-  isLiquidated: Boolean  
-  timestamp: Int 
+  isLiquidated: Boolean
+  timestamp: Int
 }
- 
+
 type AddedCollateral @entity {
   id: ID!
   tradeId: BigInt!
   trader: Bytes
   addedCollateral: BigInt!
-  timestamp: Int 
+  timestamp: Int
 }
- 
- type LiquidatedTrade @entity {
+
+type LiquidatedTrade @entity {
   id: ID!
   tradeId: BigInt!
   trader: Bytes
   liquidator: Bytes
   stableToSendLiquidator: BigInt
   stableToSendTradeOwner: BigInt
-  timestamp: Int 
- }
-  
+  timestamp: Int
+}

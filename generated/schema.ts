@@ -68,90 +68,13 @@ export class Trade extends Entity {
     }
   }
 
-  get leverage(): BigInt | null {
-    let value = this.get("leverage");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+  get tradeValue(): BigInt {
+    let value = this.get("tradeValue");
+    return value.toBigInt();
   }
 
-  set leverage(value: BigInt | null) {
-    if (value === null) {
-      this.unset("leverage");
-    } else {
-      this.set("leverage", Value.fromBigInt(value as BigInt));
-    }
-  }
-
-  get collateral(): BigInt | null {
-    let value = this.get("collateral");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set collateral(value: BigInt | null) {
-    if (value === null) {
-      this.unset("collateral");
-    } else {
-      this.set("collateral", Value.fromBigInt(value as BigInt));
-    }
-  }
-
-  get openFee(): BigInt | null {
-    let value = this.get("openFee");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set openFee(value: BigInt | null) {
-    if (value === null) {
-      this.unset("openFee");
-    } else {
-      this.set("openFee", Value.fromBigInt(value as BigInt));
-    }
-  }
-
-  get assetMarketPrice(): BigInt | null {
-    let value = this.get("assetMarketPrice");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set assetMarketPrice(value: BigInt | null) {
-    if (value === null) {
-      this.unset("assetMarketPrice");
-    } else {
-      this.set("assetMarketPrice", Value.fromBigInt(value as BigInt));
-    }
-  }
-
-  get isLong(): boolean {
-    let value = this.get("isLong");
-    return value.toBoolean();
-  }
-
-  set isLong(value: boolean) {
-    this.set("isLong", Value.fromBoolean(value));
-  }
-
-  get isLiquidated(): boolean {
-    let value = this.get("isLiquidated");
-    return value.toBoolean();
-  }
-
-  set isLiquidated(value: boolean) {
-    this.set("isLiquidated", Value.fromBoolean(value));
+  set tradeValue(value: BigInt) {
+    this.set("tradeValue", Value.fromBigInt(value));
   }
 
   get isOpen(): boolean {
@@ -163,107 +86,22 @@ export class Trade extends Entity {
     this.set("isOpen", Value.fromBoolean(value));
   }
 
-  get stablePrice(): BigInt | null {
-    let value = this.get("stablePrice");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
+  get isLong(): boolean {
+    let value = this.get("isLong");
+    return value.toBoolean();
   }
 
-  set stablePrice(value: BigInt | null) {
-    if (value === null) {
-      this.unset("stablePrice");
-    } else {
-      this.set("stablePrice", Value.fromBigInt(value as BigInt));
-    }
+  set isLong(value: boolean) {
+    this.set("isLong", Value.fromBoolean(value));
   }
 
-  get percentToClose(): BigInt | null {
-    let value = this.get("percentToClose");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set percentToClose(value: BigInt | null) {
-    if (value === null) {
-      this.unset("percentToClose");
-    } else {
-      this.set("percentToClose", Value.fromBigInt(value as BigInt));
-    }
-  }
-
-  get assetOpenPrice(): BigInt | null {
-    let value = this.get("assetOpenPrice");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set assetOpenPrice(value: BigInt | null) {
-    if (value === null) {
-      this.unset("assetOpenPrice");
-    } else {
-      this.set("assetOpenPrice", Value.fromBigInt(value as BigInt));
-    }
-  }
-
-  get assetRedemptionAmount(): BigInt | null {
-    let value = this.get("assetRedemptionAmount");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set assetRedemptionAmount(value: BigInt | null) {
-    if (value === null) {
-      this.unset("assetRedemptionAmount");
-    } else {
-      this.set("assetRedemptionAmount", Value.fromBigInt(value as BigInt));
-    }
-  }
-
-  get lastUpdate(): i32 {
-    let value = this.get("lastUpdate");
+  get timestamp(): i32 {
+    let value = this.get("timestamp");
     return value.toI32();
   }
 
-  set lastUpdate(value: i32) {
-    this.set("lastUpdate", Value.fromI32(value));
-  }
-
-  get openedAt(): i32 {
-    let value = this.get("openedAt");
-    return value.toI32();
-  }
-
-  set openedAt(value: i32) {
-    this.set("openedAt", Value.fromI32(value));
-  }
-
-  get referral(): Bytes | null {
-    let value = this.get("referral");
-    if (value === null || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBytes();
-    }
-  }
-
-  set referral(value: Bytes | null) {
-    if (value === null) {
-      this.unset("referral");
-    } else {
-      this.set("referral", Value.fromBytes(value as Bytes));
-    }
+  set timestamp(value: i32) {
+    this.set("timestamp", Value.fromI32(value));
   }
 }
 

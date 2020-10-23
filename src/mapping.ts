@@ -1,30 +1,35 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, BigDecimal, log } from '@graphprotocol/graph-ts'
+
 import {
   Futureswap,
   AddCollateral,
   IncentivesCallFailed,
   TradeClose,
   TradeLiquidate,
-  TradeOpen
-} from "../generated/Futureswap/Futureswap"
-import { Trade, ClosedTrade, OpenedTrade, AddedCollateral, LiquidatedTrade } from "../generated/schema"
+  TradeOpen,
+} from "../generated/Futureswap/Futureswap";
+import {
+  Trade,
+  ClosedTrade,
+  OpenedTrade,
+  AddedCollateral,
+  LiquidatedTrade,
+} from "../generated/schema";
 
 export function handleAddCollateral(event: AddCollateral): void {
-
   const id = event.address
-  .toHexString()
-  .concat("-")
-  .concat(event.params.tradeId.toString());
+    .toHexString()
+    .concat("-")
+    .concat(event.params.tradeId.toString());
 
   let addedCollateral = new AddedCollateral(id);
 
-  addedCollateral.tradeId = event.params.tradeId;   
+  addedCollateral.tradeId = event.params.tradeId;
   addedCollateral.trader = event.params.trader;
   addedCollateral.addedCollateral = event.params.addedCollateral;
-  addedCollateral.timestamp = event.block.timestamp.toI32();   
+  addedCollateral.timestamp = event.block.timestamp.toI32();
 
-  addedCollateral.save()
-
+  addedCollateral.save();
 
   // // Entities can be loaded from the store using a string ID; this ID
   // // needs to be unique across all entities of the same type
@@ -72,15 +77,14 @@ export function handleAddCollateral(event: AddCollateral): void {
 // }
 
 export function handleTradeClose(event: TradeClose): void {
-
   const id = event.address
-  .toHexString()
-  .concat("-")
-  .concat(event.params.tradeId.toString());
+    .toHexString()
+    .concat("-")
+    .concat(event.params.tradeId.toString());
 
   let tradeClosed = new ClosedTrade(id);
 
-  tradeClosed.tradeId = event.params.tradeId;   
+  tradeClosed.tradeId = event.params.tradeId;
   tradeClosed.trader = event.params.trader;
   tradeClosed.isLong = event.params.isLong;
   tradeClosed.referral = event.params.referral;
@@ -88,44 +92,55 @@ export function handleTradeClose(event: TradeClose): void {
   tradeClosed.assetMarketPrice = event.params.assetMarketPrice;
   tradeClosed.stablePrice = event.params.stablePrice;
   tradeClosed.assetOpenPrice = event.params.assetOpenPrice;
-  tradeClosed.assetRedemptionAmount = event.params.assetRedemptionAmount;  
-  tradeClosed.isLiquidated = event.params.isLiquidated;   
-  tradeClosed.timestamp = event.block.timestamp.toI32();   
+  tradeClosed.assetRedemptionAmount = event.params.assetRedemptionAmount;
+  tradeClosed.isLiquidated = event.params.isLiquidated;
+  tradeClosed.timestamp = event.block.timestamp.toI32();
 
-  tradeClosed.save()
+  tradeClosed.save();
+
+ 
+  let trade = new Trade(id);
+
+  trade.tradeId = event.params.tradeId;
+  trade.trader = event.params.trader;
+  trade.tradeValue = event.params.assetRedemptionAmount
+  trade.isOpen = false
+  trade.isLong =  event.params.isLong;
+  trade.timestamp = event.block.timestamp.toI32();
+
+  trade.save();
+
+   
 
 }
 
 export function handleTradeLiquidate(event: TradeLiquidate): void {
-
   const id = event.address
-  .toHexString()
-  .concat("-")
-  .concat(event.params.tradeId.toString());
+    .toHexString()
+    .concat("-")
+    .concat(event.params.tradeId.toString());
 
   let liquidatedTrade = new LiquidatedTrade(id);
 
-  liquidatedTrade.tradeId = event.params.tradeId; 
-  liquidatedTrade.trader = event.params.trader; 
-  liquidatedTrade.liquidator = event.params.liquidator; 
-  liquidatedTrade.stableToSendLiquidator = event.params.stableToSendLiquidator; 
-  liquidatedTrade.stableToSendTradeOwner = event.params.stableToSendTradeOwner; 
-  liquidatedTrade.timestamp = event.block.timestamp.toI32();   
+  liquidatedTrade.tradeId = event.params.tradeId;
+  liquidatedTrade.trader = event.params.trader;
+  liquidatedTrade.liquidator = event.params.liquidator;
+  liquidatedTrade.stableToSendLiquidator = event.params.stableToSendLiquidator;
+  liquidatedTrade.stableToSendTradeOwner = event.params.stableToSendTradeOwner;
+  liquidatedTrade.timestamp = event.block.timestamp.toI32();
 
-  liquidatedTrade.save()
-
+  liquidatedTrade.save();
 }
 
 export function handleTradeOpen(event: TradeOpen): void {
-
+  
   const id = event.address
-  .toHexString()
-  .concat("-")
-  .concat(event.params.tradeId.toString());
+    .toHexString()
+    .concat("-")
+    .concat(event.params.tradeId.toString());
 
-  // const trade = new Trade(id);
-
-  // trade.tradeId = event.params.tradeId;   
+ 
+  // trade.tradeId = event.params.tradeId;
   // trade.isOpen = true;
   // trade.trader = event.params.trader;
   // trade.isLong = event.params.isLong;
@@ -134,24 +149,35 @@ export function handleTradeOpen(event: TradeOpen): void {
   // trade.assetMarketPrice = event.params.assetMarketPrice;
   // trade.stablePrice = event.params.stablePrice;
   // trade.openFee = event.params.openFee;
-  // trade.isLiquidated = false;  
+  // trade.isLiquidated = false;
   // trade.lastUpdate = event.block.timestamp.toI32();
   // trade.openedAt = event.block.timestamp.toI32();
 
   // trade.save()
 
+  let tradeOpened = new OpenedTrade(id);
 
- let tradeOpened = new OpenedTrade(id);
+  tradeOpened.tradeId = event.params.tradeId;
+  tradeOpened.trader = event.params.trader;
+  tradeOpened.leverage = event.params.leverage;
+  tradeOpened.collateral = event.params.collateral;
+  tradeOpened.openFee = event.params.openFee;
+  tradeOpened.assetMarketPrice = event.params.assetMarketPrice;
+  tradeOpened.isLong = event.params.isLong;
+  tradeOpened.stablePrice = event.params.stablePrice;
+  tradeOpened.timestamp = event.block.timestamp.toI32();
 
- tradeOpened.tradeId = event.params.tradeId; 
- tradeOpened.trader = event.params.trader; 
- tradeOpened.leverage = event.params.leverage; 
- tradeOpened.collateral = event.params.collateral; 
- tradeOpened.openFee = event.params.openFee; 
- tradeOpened.assetMarketPrice = event.params.assetMarketPrice; 
- tradeOpened.isLong = event.params.isLong; 
- tradeOpened.stablePrice = event.params.stablePrice; 
- tradeOpened.timestamp = event.block.timestamp.toI32();   
+  tradeOpened.save();
 
- tradeOpened.save()
+let trade = new Trade(id);
+ 
+ trade.tradeId = event.params.tradeId;
+ trade.trader = event.params.trader;
+ trade.tradeValue = event.params.collateral.times(event.params.leverage).div((event.params.assetMarketPrice));
+ trade.isOpen = true
+ trade.isLong =  event.params.isLong;
+ trade.timestamp = event.block.timestamp.toI32();
+
+ trade.save();
+ 
 }
