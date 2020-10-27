@@ -98,8 +98,12 @@ export function handleTradeClose(event: TradeClose): void {
 
   tradeClosed.save();
 
- 
-  let trade = new Trade(id);
+  const id2 = event.address
+  .toHexString()
+  .concat("-1-")
+  .concat(event.params.tradeId.toString())
+
+  let trade = new Trade(event.transaction.hash.toHex());
 
   trade.tradeId = event.params.tradeId;
   trade.trader = event.params.trader;
@@ -109,9 +113,6 @@ export function handleTradeClose(event: TradeClose): void {
   trade.timestamp = event.block.timestamp.toI32();
 
   trade.save();
-
-   
-
 }
 
 export function handleTradeLiquidate(event: TradeLiquidate): void {
@@ -169,11 +170,20 @@ export function handleTradeOpen(event: TradeOpen): void {
 
   tradeOpened.save();
 
-let trade = new Trade(id);
+  const id2 = event.address
+  .toHexString()
+  .concat("-1-")
+  .concat(event.params.tradeId.toString())
+
+  let trade = new Trade(event.transaction.hash.toHex());
  
+  // const ONE_ETH = new BigInt('1000000000000000000')
+  let halfEthBigInt = BigInt.fromI32(1000000000)
+
+
  trade.tradeId = event.params.tradeId;
  trade.trader = event.params.trader;
- trade.tradeValue = event.params.collateral.times(event.params.leverage).div((event.params.assetMarketPrice));
+ trade.tradeValue = event.params.collateral.times(event.params.leverage).times(halfEthBigInt).times(halfEthBigInt).div((event.params.assetMarketPrice));
  trade.isOpen = true
  trade.isLong =  event.params.isLong;
  trade.timestamp = event.block.timestamp.toI32();
