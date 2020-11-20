@@ -103,6 +103,23 @@ export class Trade extends Entity {
   set timestamp(value: i32) {
     this.set("timestamp", Value.fromI32(value));
   }
+
+  get percentToClose(): BigInt | null {
+    let value = this.get("percentToClose");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set percentToClose(value: BigInt | null) {
+    if (value === null) {
+      this.unset("percentToClose");
+    } else {
+      this.set("percentToClose", Value.fromBigInt(value as BigInt));
+    }
+  }
 }
 
 export class OpenedTrade extends Entity {

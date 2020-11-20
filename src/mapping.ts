@@ -111,6 +111,7 @@ export function handleTradeClose(event: TradeClose): void {
   trade.isOpen = false
   trade.isLong =  event.params.isLong;
   trade.timestamp = event.block.timestamp.toI32();
+  trade.percentToClose = event.params.percentToClose;
 
   trade.save();
 }

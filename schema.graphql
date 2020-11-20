@@ -6,6 +6,7 @@ type Trade @entity {
   isOpen: Boolean
   isLong: Boolean
   timestamp: Int
+  percentToClose: BigInt
 }
 
 type OpenedTrade @entity {
