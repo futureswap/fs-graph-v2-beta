@@ -6,7 +6,7 @@ dataSources:
     name: Futureswap
     network: kovan
     source:
-      address: "0xd34b0e37f3cb3c744f8ee3a5079a21f931fdfdac"
+      address: "0x063590C1513f8D911228e3FC18e45E7d9509d77a"
       abi: Futureswap
       startBlock: 21446321
     mapping:
